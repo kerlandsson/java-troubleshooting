@@ -104,8 +104,7 @@ Top is used in batch mode which makes it append the output to the console.
 
 Dump both thread stacks and CPU usage by thread with PIDs hex-converted to the same file. 
 
-    export fn=/tmp/dump_${pid}_$(date +"%H_%M_%S"); $JAVA_HOME/
-    bin/jstack $pid > $fn && top -p $pid -H -d 2 -b -n 2 | sed -r 's/^([0-9]+) (.*)/printf "%x  \2" \1/e' >> $fn
+    export fn=/tmp/dump_${pid}_$(date +"%H_%M_%S"); $JAVA_HOME/bin/jstack $pid > $fn && top -p $pid -H -d 2 -b -n 2 | sed -r 's/^([0-9]+) (.*)/printf "%x  \2" \1/e' >> $fn
     
 
 ## Other
