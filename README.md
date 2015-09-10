@@ -26,7 +26,22 @@ The following assumptions are made.
 
 Take a thread dump every 5 seconds and save to a timestamped file
 
-    for i in `seq 10`;do echo "dump $i";$JAVA_HOME/bin/jstack $pid > /tmp/dump_$pid_$(date '+%H_%M_%S').txt; sleep 5;done
+    for i in `seq 10`;do echo "dump $i";$JAVA_HOME/bin/jstack $pid > /tmp/dump_${pid}_$(date '+%H_%M_%S').txt; sleep 5;done
+    
+##### Dump when CPU usage is high
+
+Take a thread dump every 5 seconds whenever the CPU usage is over 50%.
+
+```
+while true
+    do echo -n .
+    if [ "$(mpstat 1 1|grep '^Average' |awk '{print $3}'|cut -d '.' -f 1)" -gt "50" ];then
+        echo dumping
+        $JAVA_HOME/bin/jstack $pid > /tmp/dump_${pid}_$(date '+%H_%M_%S').txt
+        sleep 5
+    fi
+done
+```
     
 
 ## Garbage Collector
