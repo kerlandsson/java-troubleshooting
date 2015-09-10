@@ -11,21 +11,21 @@ The following assumptions are made.
 
 ## General
 
-#### View running Java processes
+##### View running Java processes
 
     $JAVA_HOME/bin/jps -mlvV
 
 ## Thread Dumps
 
 
-#### Dump Thread Stacks
+##### Dump Thread Stacks
 
     $JAVA_HOME/bin/jstack $pid
     
 
 ## Garbage Collector
 
-#### Heap usage and accumulated GC times
+##### Heap usage and accumulated GC times
 
 Show heap usage by generation and GC duration in seconds accumulated since the JVM started.
 
@@ -35,7 +35,7 @@ If you prefer percentages instead of bytes:
 
     $JAVA_HOME/bin/jstat -gcutil $pid 3s
     
-#### Garbage collection cause
+##### Garbage collection cause
 
 Print the cause of the current and the last GC.
 
@@ -48,7 +48,7 @@ Print the cause of the current and the last GC.
 
 ## CPU Usage
 
-#### View CPU usage by thread
+##### View CPU usage by thread
 
 Java threads are mapped to native threads on Linux. Use `top -H` to show threads in top.
 
