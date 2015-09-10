@@ -1,6 +1,6 @@
 # Troubleshooting Java Applications
 
-This document contains useful commands and code snippets for troubleshooting Java applications.
+This document contains useful commands and code snippets for troubleshooting Java applications in production.
 
 The following assumptions are made.
 
@@ -8,6 +8,8 @@ The following assumptions are made.
 * `$JAVA_HOME` is set to a JDK installation
 * You are logged in as the same user as the Java process you are troubleshooting is running as
 * You are on a Linux machine (most stuff works on *NIX but is untested)
+
+The commands are generally safe to run in production unless otherwise stated.
 
 ## General
 
@@ -19,6 +21,8 @@ The following assumptions are made.
 
 
 ##### Dump Thread Stacks
+
+Performance impact is usually minimal, although all threads must reach a safepoint to be able to dump
 
     $JAVA_HOME/bin/jstack $pid
     
@@ -100,5 +104,16 @@ Top is used in batch mode which makes it append the output to the console.
 
 Dump both thread stacks and CPU usage by thread with PIDs hex-converted to the same file. 
 
-    export fn=/tmp/dump_${pid}_$(date +"%H_%M_%S"); $JAVA_HOME/bin/jstack $pid > $fn && top -p $pid -H -d 2 -b -n 2 | sed -r 's/^([0-9]+) (.*)/printf "%x  \2" \1/e' >> $fn
+    export fn=/tmp/dump_${pid}_$(date +"%H_%M_%S"); $JAVA_HOME/
+    bin/jstack $pid > $fn && top -p $pid -H -d 2 -b -n 2 | sed -r 's/^([0-9]+) (.*)/printf "%x  \2" \1/e' >> $fn
+    
+
+## Other
+
+##### JIT compiler statistics
+
+Show number of total compile tasks and information about the most recent task (size, type and method).
+
+    $JAVA_HOME/bin/jstat -printcompilation $pid 3s
+    
     
