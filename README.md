@@ -116,4 +116,10 @@ Show number of total compile tasks and information about the most recent task (s
 
     $JAVA_HOME/bin/jstat -printcompilation $pid 3s
     
+##### View lots of performance counters
+
+    $JAVA_HOME/bin/jcmd $pid PerfCounter.print
+    
+Uses a lowercase `c` on older JVMs.
+    
     
