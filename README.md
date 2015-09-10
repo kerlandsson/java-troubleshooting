@@ -22,6 +22,12 @@ The following assumptions are made.
 
     $JAVA_HOME/bin/jstack $pid
     
+##### Dump several times
+
+Take a thread dump every 5 seconds and save to a timestamped file
+
+    for i in `seq 10`;do echo "dump $i";$JAVA_HOME/bin/jstack $pid > /tmp/dump_$pid_$(date '+%H_%M_%S').txt; sleep 5;done
+    
 
 ## Garbage Collector
 
@@ -49,13 +55,13 @@ Show a class histogram with class names, number of instances and total size on t
 
     $JAVA_HOME/bin/jmap -histo $pid
     
-Show only live objects (*NB: this triggers a full GC*):
+Show only live objects (**NB: this triggers a full GC**):
 
     $JAVA_HOME/bin/jmap -histo:live $pid
 
 ##### Full heap dump
 
-Generate a full heap dump (*NB: this will freeze the JVM for the full duration*).
+Generate a full heap dump (**NB: this will freeze the JVM for the full duration**).
 
     $JAVA_HOME/bin/jmap -dump:format=b,file=/tmp/heap_dump_$pid.bin $pid
 
