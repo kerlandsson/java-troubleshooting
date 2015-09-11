@@ -164,4 +164,24 @@ Network utilization on interface `bond0`.
 ##### Show open files
 
     lsof -p $pid
+    
+##### Show free disk space
+
+    df -h
+    
+##### What is using the disk?
+
+    du -hs <path> 
      
+     
+## Memory
+
+##### Show used/available RAM
+
+    free -h
+    
+##### Show processes sorted by memory usage
+
+    top -ba -n 1
+    
+    
