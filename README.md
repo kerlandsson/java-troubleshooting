@@ -2,10 +2,13 @@
 
 This document contains useful commands and code snippets for troubleshooting Java applications in production.
 
+Much of this is not exclusively for Java applications.
+
 The following assumptions are made.
 
 * The `$pid` variable contains the process ID (PID) to the Java process in question
 * `$JAVA_HOME` is set to a JDK installation
+* You are using Oracle's HotSpot JVM
 * You are logged in as the same user as the Java process you are troubleshooting is running as
 * You are on a Linux machine (most stuff works on *NIX but is untested)
 
@@ -107,7 +110,7 @@ Dump both thread stacks and CPU usage by thread with PIDs hex-converted to the s
     export fn=/tmp/dump_${pid}_$(date +"%H_%M_%S"); $JAVA_HOME/bin/jstack $pid > $fn && top -p $pid -H -d 2 -b -n 2 | sed -r 's/^([0-9]+) (.*)/printf "%x  \2" \1/e' >> $fn
     
 
-## Other
+## JVM Internals
 
 ##### JIT compiler statistics
 
@@ -121,4 +124,33 @@ Show number of total compile tasks and information about the most recent task (s
     
 Uses a lowercase `c` on older JVMs.
     
+## Network
+
+##### Who is listening?
+
+Show all listen ports:
+
+    ss -ln
+
+Show which process is listening on port 8989 (requires root):
+
+    ss -lnp "sport = 8989"
+     
+     
+##### What is sent/received?
+
+Show 4 packets as ascii that is sent or received on port 10003 on interface `bond0`.
+
+    tcpdump -A -p -c 4 -i bond0 'port 10003'
     
+    
+## Disk
+
+##### View disk utilization
+
+    iostat -x 2
+    
+##### Show open files
+
+    lsof -p $pid
+     
