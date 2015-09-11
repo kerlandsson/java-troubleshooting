@@ -1,8 +1,6 @@
 # Troubleshooting Java Applications
 
-This document contains useful commands and code snippets for troubleshooting Java applications in production.
-
-Much of this is not exclusively for Java applications.
+This document contains useful commands and code snippets for troubleshooting (Java) server applications in production.
 
 The following assumptions are made.
 
@@ -20,6 +18,7 @@ The commands are generally safe to run in production unless otherwise stated.
 
     $JAVA_HOME/bin/jps -mlvV
 
+
 ## Thread Dumps
 
 
@@ -33,7 +32,7 @@ Performance impact is usually minimal, although all threads must reach a safepoi
 
 Take a thread dump every 5 seconds and save to a timestamped file
 
-    for i in `seq 10`;do echo "dump $i";$JAVA_HOME/bin/jstack $pid > /tmp/dump_${pid}_$(date '+%H_%M_%S').txt; sleep 5;done
+    while true;do echo -n ".";$JAVA_HOME/bin/jstack $pid > /tmp/dump_${pid}_$(date '+%H_%M_%S').txt; sleep 5;done
     
 ##### Dump when CPU usage is high
 
@@ -50,7 +49,7 @@ while true
 done
 ```
     
-
+    
 ## Garbage Collector
 
 ##### Heap usage and accumulated GC times
@@ -68,6 +67,7 @@ If you prefer percentages instead of bytes:
 Print the cause of the current and the last GC.
 
     $JAVA_HOME/bin/jstat -gccause $pid 3s
+
 
 ## Heap
 
@@ -122,7 +122,8 @@ Show number of total compile tasks and information about the most recent task (s
 
     $JAVA_HOME/bin/jcmd $pid PerfCounter.print
     
-Uses a lowercase `c` on older JVMs.
+Uses a lowercase `c` (`Perfcounter.print`) on older JVMs.
+    
     
 ## Network
 
@@ -143,6 +144,16 @@ Show 4 packets as ascii that is sent or received on port 10003 on interface `bon
 
     tcpdump -A -p -c 4 -i bond0 'port 10003'
     
+`tcpdump` is not ubiquitous.
+    
+##### View network utilization by process
+
+Network utilization on interface `bond0`.
+
+    nethogs bond0
+    
+`nethogs` is not ubiquitous.
+
     
 ## Disk
 
