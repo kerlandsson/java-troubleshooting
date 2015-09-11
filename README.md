@@ -80,6 +80,8 @@ Show a class histogram with class names, number of instances and total size on t
 Show only live objects (**NB: this triggers a full GC**):
 
     $JAVA_HOME/bin/jmap -histo:live $pid
+    
+Tip: This is a way to explicitly trigger a full GC even though explicit GC has been disabled on the target JVM.
 
 ##### Full heap dump
 
