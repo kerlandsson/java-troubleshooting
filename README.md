@@ -126,6 +126,14 @@ Show number of total compile tasks and information about the most recent task (s
     $JAVA_HOME/bin/jcmd $pid PerfCounter.print
     
 Uses a lowercase `c` (`Perfcounter.print`) on older JVMs.
+
+##### View system properties
+
+     $JAVA_HOME/bin/jcmd $pid VM.system_properties
+     
+##### View JVM flags
+
+    $JAVA_HOME/bin/jcmd $pid VM.flags
     
     
 ## Network
@@ -187,4 +195,10 @@ Network utilization on interface `bond0`.
 
     top -ba -n 1
     
+    
+## Other
+
+##### Run a command when something specific is logged
+
+    tail -n0 -F <file> |grep --line-buffered <regex> | <cmd>
     
