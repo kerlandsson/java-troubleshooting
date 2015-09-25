@@ -146,7 +146,7 @@ Show all listen ports:
 
 Show which process is listening on port 8989 (requires root):
 
-    ss -lnp "sport = 8989"
+    ss -lnp "sport = :8989"
      
      
 ##### What is sent/received?
