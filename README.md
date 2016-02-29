@@ -202,3 +202,7 @@ Network utilization on interface `bond0`.
 
     tail -n0 -F <file> |grep --line-buffered <regex> | <cmd>
     
+##### Count total number of threads on the machine
+    
+    ps -eL|wc -l
+    
